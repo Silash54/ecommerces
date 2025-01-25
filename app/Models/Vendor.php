@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -45,4 +46,19 @@ class Vendor extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    /**
+     * Get all of the Products for the Vendor
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function Products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+    
+    public function Shop()
+    {
+        return $this->hasOne(Shop::class);
+    }
+    
 }
