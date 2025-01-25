@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('youtube')->nullable();
             $table->string('tiktok')->nullable();
             $table->string('instagram')->nullable();
-            $table->string('terms');
-            $table->string('policy');
+            $table->longText('terms');
+            $table->longText('policy');
             $table->timestamps();
         });
     }
