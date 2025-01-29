@@ -19,6 +19,7 @@ class CompanyResource extends Resource
 
     protected static ?string $navigationIcon = 'fas-building';
     protected static ?string $navigationGroup = 'settings';
+    protected static ?int $navigationSort=1;
     protected static ?string $modelLabel = 'Company';
     protected static ?string $pluralModelLabel = 'Company';
 

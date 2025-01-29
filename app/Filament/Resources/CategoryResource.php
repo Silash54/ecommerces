@@ -17,7 +17,9 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'fas-tags';
+    protected static ?string $navigationGroup = "settings";
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -28,6 +30,7 @@ class CategoryResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('commission')
                     ->required()
+                    ->suffix('%')
                     ->numeric(),
             ]);
     }
@@ -38,7 +41,7 @@ class CategoryResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('commission')
+                Tables\Columns\TextColumn::make('commission percentage')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -54,7 +57,7 @@ class CategoryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                //Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
