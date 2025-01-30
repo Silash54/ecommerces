@@ -17,31 +17,48 @@ class VendorResource extends Resource
 {
     protected static ?string $model = Vendor::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'fab-shopware';
+    protected static ?string $navigationGroup = "Vendor Management";
+    protected static ?int $navigationSort = 3;
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', 'pending')->count();
+    }
+    public static function canCreate():bool{
+        return false;
+    }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->hidden()
                     ->maxLength(255),
+                    
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
+                    ->hidden()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('status')
+                Forms\Components\Select::make('status')
                     ->required()
-                    ->maxLength(255)
-                    ->default('pending'),
+                    ->options([
+                        'pending'=>'pending',
+                        'approved'=>'approved',
+                        'rejected'=>'rejected'
+                    ]),
                 Forms\Components\TextInput::make('balance')
                     ->required()
                     ->numeric()
+                    ->hidden()
                     ->default(0),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
+                Forms\Components\DateTimePicker::make('email_verified_at')->hidden(),
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->required()
+                    ->hidden()
                     ->maxLength(255),
             ]);
     }
@@ -59,9 +76,6 @@ class VendorResource extends Resource
                 Tables\Columns\TextColumn::make('balance')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -75,7 +89,7 @@ class VendorResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -97,8 +111,8 @@ class VendorResource extends Resource
         return [
             'index' => Pages\ListVendors::route('/'),
             'create' => Pages\CreateVendor::route('/create'),
-            'view' => Pages\ViewVendor::route('/{record}'),
-            'edit' => Pages\EditVendor::route('/{record}/edit'),
+            // 'view' => Pages\ViewVendor::route('/{record}'),
+            // 'edit' => Pages\EditVendor::route('/{record}/edit'),
         ];
     }
 }

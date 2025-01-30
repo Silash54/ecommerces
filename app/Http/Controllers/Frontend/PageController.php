@@ -50,7 +50,7 @@ class PageController extends Controller
         $data=[
             'subject'=>'New Vendor request',
             'to'=>'Silas Rai',
-            'message'=>"Vendor request received from $request->name with email $request->email and phone is $request->phone and shop name is$request->shop_name"
+            'message'=>"Vendor request received from $request->name with email $request->email password is silas123 and phone is $request->phone and shop name is$request->shop_name"
         ];
         $admins=Admin::all();
         Mail::to($admins)->send(new EmailNotification($data));

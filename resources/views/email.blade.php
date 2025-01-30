@@ -7,6 +7,7 @@
     <title>Email Notification</title>
     <style>
         .body{
+            width: 50%
             background-color: greenyellow;
             border-radius: 20px;
             padding: 20px;
