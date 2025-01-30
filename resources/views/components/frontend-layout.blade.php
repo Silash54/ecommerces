@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="{{ asset('frontend/style.css') }}">
 </head>
 <body>
+    @include('sweetalert::alert')
+
     <header class="bg-primary">
         <x-frontend-navbar/>
     </header>
