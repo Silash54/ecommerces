@@ -17,44 +17,58 @@ class PageController extends Controller
 {
     public function __construct()
     {
-        $company=Company::first();
+        $company = Company::first();
 
 
         View::share([
-            'company'=>$company
+            'company' => $company
         ]);
     }
     public function home()
     {
-        return view('frontend.home');
+        $vendors = Vendor::where('status','approved')->get();
+        return view('frontend.home',compact('vendors'));
     }
     public function VendorRequest(Request $request)
     {
+        // Validate request
         $request->validate([
-            'name'=>'required|string',
-            'email'=>'required|email|unique:vendors',
-            'phone'=>'required|digits:10|unique:shops',
-            'shop_name'=>'required'
+            'name' => 'required|string',
+            'email' => 'required|email|unique:vendors',
+            'phone' => 'required|digits:10|unique:shops',
+            'shop_name' => 'required'
         ]);
-        $vendor=new Vendor();
-        $vendor->name=$request->name;
-        $vendor->email=$request->email;
-        $vendor->password=Hash::make('silas123');
-        $vendor->save();
 
-        $shop=new Shop();
-        $shop->name=$request->shop_name;
-        $shop->phone=$request->phone;
-        $shop->vendor_id=$vendor->id;
-        $shop->save();
-        $data=[
-            'subject'=>'New Vendor request',
-            'to'=>'Silas Rai',
-            'message'=>"Vendor request received from $request->name with email $request->email password is silas123 and phone is $request->phone and shop name is$request->shop_name"
+        // Create Vendor
+        $vendor = Vendor::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make('silas123')
+        ]);
+
+        // Check if vendor was created before inserting shop
+        if ($vendor) {
+            $shop = Shop::create([
+                'name' => $request->shop_name,
+                'phone' => $request->phone,
+                'vendor_id' => $vendor->id // FIXED THIS LINE
+            ]);
+        }
+
+        // Prepare email data
+        $data = [
+            'subject' => 'New Vendor request',
+            'to' => 'Silas Rai',
+            'message' => "Vendor request received from $request->name with email $request->email. 
+            Password is silas123, phone is $request->phone, and shop name is $request->shop_name"
         ];
-        $admins=Admin::all();
-        Mail::to($admins)->send(new EmailNotification($data));
-        toast('your request has successfully submitted','success');
+
+        // Send email notification
+        Mail::to("silasraii144@gmail.com")->send(new EmailNotification($data));
+
+        // Show success toast
+        toast('Your request has been successfully submitted', 'success');
+
         return redirect()->back();
     }
 }

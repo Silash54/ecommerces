@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('image');
             $table->double('price');
-            $table->integer('qty');
             $table->longText('description')->nullable();
             $table->double('discount')->default(0);
             $table->foreignId('vendor_id')->constrained()->cascadeOnDelete();
