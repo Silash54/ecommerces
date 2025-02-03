@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\EmailNotification;
 use App\Models\Admin;
 use App\Models\Company;
+use App\Models\Product;
 use App\Models\Shop;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -27,7 +28,8 @@ class PageController extends Controller
     public function home()
     {
         $vendors = Vendor::where('status','approved')->get();
-        return view('frontend.home',compact('vendors'));
+        $products=Product::whereNotNull('discount')->get();
+        return view('frontend.home',compact('vendors','products'));
     }
     public function VendorRequest(Request $request)
     {

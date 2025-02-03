@@ -72,7 +72,6 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('vendor.name')
                     ->numeric()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -11,15 +11,16 @@
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($vendors as $vendor)
-                <div class=" overflow-hidden gap-6 md:gap-10 py-5">
-                    <a href="">
-                        <img class="h-[300px] w-full object-cover border rounded" src="{{ asset(Storage::url($vendor->shop->logo)) }}" alt="{{ $vendor->shop->logo }}">
-                        <div class="px-4 py-2">
-                            <h1>{{ Str::limit($vendor->shop->name,60,'...') }} ({{ count($vendor->products) }})</h1>
-                        <small>{{ $vendor->shop->address }}</small>
-                        </div>
-                    </a>
-                </div>
+                    <div class=" overflow-hidden gap-6 md:gap-10 py-5">
+                        <a href="">
+                            <img class="h-[300px] w-full object-cover border rounded"
+                                src="{{ asset(Storage::url($vendor->shop->logo)) }}" alt="{{ $vendor->shop->logo }}">
+                            <div class="px-4 py-2">
+                                <h1>{{ Str::limit($vendor->shop->name, 60, '...') }} ({{ count($vendor->products) }})</h1>
+                                <small>{{ $vendor->shop->address }}</small>
+                            </div>
+                        </a>
+                    </div>
                 @endforeach
             </div>
         </div>
@@ -32,21 +33,14 @@
             <div class="flex justify-between">
                 <div>
                     <h1 class="primary text-2xl">Special Deals</h1>
-                <small>Best quality deals & products</small>
+                    <small>Best quality deals & products</small>
                 </div>
                 <a href="">View All</a>
             </div>
-            <div>
-                <a class="grid grid-cols-[auto_1fr] gap-2 items-center" href="">
-                    <img src="https://www.floor.com.np/images/1712210250.jpg" class="w-auto h-[120px] object-cover" alt="" />
-                    <div>
-                        <h1>HV Box</h1>
-                        <div>
-                            <s class="text-red-600">Rs.750</s> Rs.375
-                        </div>
-                        <strong>Hi-tech Computer</strong>
-                    </div>
-                </a>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                @foreach ($products as $product)
+                    <x-product-cart :item="$product"/>
+                @endforeach
             </div>
             
         </div>
@@ -119,20 +113,20 @@
                                 <div class="grid grid-cols-2 gap-5">
                                     <div>
                                         <label for="name">Your Name <span class="text-red-600">*</span></label>
-                                        <input class="px-2 py-1 w-full border rounded-md" type="text" name="name"
-                                            id="name" placeholder="Enter name" required
+                                        <input class="px-2 py-1 w-full border rounded-md" type="text"
+                                            name="name" id="name" placeholder="Enter name" required
                                             value="{{ old('name') }}">
                                     </div>
                                     <div>
                                         <label for="email">Email <span class="text-red-600">*</span></label>
-                                        <input type="text" class="px-2 py-1 w-full border rounded-md" name="email"
-                                            id="email" placeholder="Enter email" required
+                                        <input type="text" class="px-2 py-1 w-full border rounded-md"
+                                            name="email" id="email" placeholder="Enter email" required
                                             value="{{ old('email') }}">
                                     </div>
                                     <div>
                                         <label for="phone">Phone <span class="text-red-600">*</span></label>
-                                        <input type="text" class="w-full px-2 py-1 border rounded-md " name="phone"
-                                            id="phone" placeholder="Enter Phone number" required
+                                        <input type="text" class="w-full px-2 py-1 border rounded-md "
+                                            name="phone" id="phone" placeholder="Enter Phone number" required
                                             value="{{ old('phone') }}">
                                     </div>
                                     <div>
