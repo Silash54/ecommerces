@@ -28,7 +28,7 @@ class PageController extends Controller
     public function home()
     {
         $vendors = Vendor::where('status','approved')->get();
-        $products=Product::whereNotNull('discount')->get();
+        $products=Product::whereNotNull('discount')->orWhere('discount','!=',0)->limit(16)->get();
         return view('frontend.home',compact('vendors','products'));
     }
     public function VendorRequest(Request $request)
@@ -72,5 +72,17 @@ class PageController extends Controller
         toast('Your request has been successfully submitted', 'success');
 
         return redirect()->back();
+    }
+    public function Compare(Request $request)
+    {
+        $q=$request->q;
+        $products=Product::where('name','like', "%$q")->orderBy('price','asc')->get();
+        return view('frontend.compare',compact('products','q'));
+    }
+    public function Vendor($id)
+    {
+        $vendor=Vendor::findOrFail($id);
+        $products=$vendor->products;
+        return view('frontend.vendor',compact('vendor','products'));
     }
 }

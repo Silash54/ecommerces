@@ -12,7 +12,7 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($vendors as $vendor)
                     <div class=" overflow-hidden gap-6 md:gap-10 py-5">
-                        <a href="">
+                        <a href="{{ route('vendor',$vendor->id) }}">
                             <img class="h-[300px] w-full object-cover border rounded"
                                 src="{{ asset(Storage::url($vendor->shop->logo)) }}" alt="{{ $vendor->shop->logo }}">
                             <div class="px-4 py-2">
