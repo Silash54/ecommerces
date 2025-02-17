@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Controllers\Frontend\PageController;
+use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('google-login',[UserController::class,'google_login'])->name('google_login');
+Route::get('/google/login',[UserController::class,'google_callback'])->name('google_callback');
 
 Route::get('/',[PageController::class,'home'])->name('home');
 Route::post('/vendor-request',[PageController::class,'VendorRequest'])->name('vendor_request');
